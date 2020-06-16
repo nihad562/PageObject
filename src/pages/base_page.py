@@ -38,3 +38,15 @@ class BasePage():
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
+
+    def get_main_product_title(self):
+        return self.browser.find_element(*LoginPageLocators.MAIN_PRODUCT_TITLE).text
+
+    def get_added_to_basket_product_title(self):
+        return self.browser.find_element(*LoginPageLocators.ADDED_TO_BASKET_PRODUCT_TITLE).text
+
+    def get_main_product_price(self):
+        return self.browser.find_element(*LoginPageLocators.MAIN_PRODUCT_PRICE).text
+
+    def get_added_to_basket_product_price(self):
+        return self.browser.find_element(*LoginPageLocators.ADDED_TO_BASKET_PRODUCT_PRICE).text

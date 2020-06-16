@@ -24,6 +24,8 @@ from src.pages.base_page import BasePage
 #    page.go_to_login_page()
 #    login_page = LoginPage(browser, browser.current_url)
 #    login_page.should_be_login_page()
+from src.pages.product_page import ProductPage
+
 
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
@@ -36,7 +38,7 @@ from src.pages.base_page import BasePage
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer8",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"])
 def test_guest_can_add_product_to_basket(browser, link):
-    page = BasePage(browser, link)
+    page = ProductPage(browser, link)
     page.open()
     page.solve_quiz_and_get_code()
     expected_text = page.get_main_product_title()

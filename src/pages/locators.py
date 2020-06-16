@@ -11,7 +11,9 @@ class LoginPageLocators():
     REG_EMAIL_FIELD = (By.CSS_SELECTOR, "input[name='registration-email']")
     REG_PAS_FIELD = (By.CSS_SELECTOR, "input[name='registration-password1']")
     REG_CONFIRMPAS_FIELD = (By.CSS_SELECTOR, "input[name='registration-password2']")
-    #GoodPage
+
+
+class ProductPageLocators():
     ADD_TO_BASKET = (By.CSS_SELECTOR, "button[class*='add-to-basket']")
     MAIN_PRODUCT_TITLE = (By.CSS_SELECTOR, "div[class*='product_main'] h1")
     ADDED_TO_BASKET_PRODUCT_TITLE = (By.CSS_SELECTOR, "div.alert:first-child strong")

@@ -1,7 +1,6 @@
 import pytest
 
-from src.pages.base_page import BasePage
-
+from .pages.base_page import BasePage
 
 # def test_guest_can_go_to_login_page(browser):
 #    link = "http://selenium1py.pythonanywhere.com/"
@@ -24,7 +23,9 @@ from src.pages.base_page import BasePage
 #    page.go_to_login_page()
 #    login_page = LoginPage(browser, browser.current_url)
 #    login_page.should_be_login_page()
-from src.pages.product_page import ProductPage
+from .pages.basket_page import BasketPage
+from .pages.main_page import MainPage
+from .pages.product_page import ProductPage
 
 
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
@@ -34,7 +35,9 @@ from src.pages.product_page import ProductPage
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer4",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer5",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer6",
-                                   pytest.param("http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer7", marks=pytest.mark.xfail),
+                                  pytest.param(
+                                      "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer7",
+                                      marks=pytest.mark.xfail),
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer8",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"])
 def test_guest_can_add_product_to_basket(browser, link):
@@ -42,8 +45,16 @@ def test_guest_can_add_product_to_basket(browser, link):
     page.open()
     page.solve_quiz_and_get_code()
     expected_text = page.get_main_product_title()
-    actual_text = page.get_added_to_basket_product_title()
     expected_price = page.get_main_product_price()
-    actual_price = page.get_added_to_basket_product_price()
-    assert actual_text == expected_text
-    assert expected_price == actual_price
+    page.should_display_message_with_expected_text_when_add_product(expected_text)
+    page.should_display_message_with_expected_price_when_add_product(expected_price)
+
+
+
+def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/"
+    product_page = MainPage(browser, link)
+    product_page.open()
+    basket_page = BasketPage(browser)
+    basket_page.should_have_empty_basket()
+    basket_page.should_contain_text_in_empty_basket_message('Your basket is empty')
